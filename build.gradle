@@ -1,0 +1,20 @@
+group 'rest'
+version 'v1'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework:spring-context:4.1.4.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.0'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.5.0'
+    compile 'mysql:mysql-connector-java:5.1.6'
+    compile 'com.sun.jersey:jersey-client:1.19'
+}
