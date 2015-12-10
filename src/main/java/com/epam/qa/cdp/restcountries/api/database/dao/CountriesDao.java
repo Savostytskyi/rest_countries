@@ -22,7 +22,7 @@ public class CountriesDao extends AbstractDao<Integer, Country> {
   public static final String SQL_SELECT_COUNTRY_BY_ID = "SELECT * FROM countries_info WHERE id = ?";
   public static final String SQL_INSERT_COUNTRY = "INSERT INTO `countries_info` (`id`, `name`, `capital`, `population`, `currency`) VALUES (?, ?, ?, ?, ?)";
   public static final String SQL_DELETE_COUNTRY = "DELETE FROM `countries_info` WHERE id = ?";
-  public static final String SQL_UPDATE_COUNTRY = "UPDATE `countries_info` SET `id` = ?, `name` = ?, `capital` = ?, `population` = ?, `currency` = ? WHERE `name` = ?";
+  public static final String SQL_UPDATE_COUNTRY = "UPDATE `countries_info` SET `name` = ?, `capital` = ?, `population` = ?, `currency` = ? WHERE `id` = ?";
 
   @Override
   public List<Country> findAll() {
@@ -114,12 +114,11 @@ public class CountriesDao extends AbstractDao<Integer, Country> {
       cn = ConnectorDB.getConnection();
       String query = SQL_UPDATE_COUNTRY;
       ps = cn.prepareStatement(query);
-      ps.setInt(1, country.getId());
-      ps.setString(2, country.getName());
-      ps.setString(3, country.getCapital());
-      ps.setInt(4, country.getPopulation());
-      ps.setString(5, country.getCurrency());
-      ps.setString(6, country.getName());
+      ps.setString(1, country.getName());
+      ps.setString(2, country.getCapital());
+      ps.setInt(3, country.getPopulation());
+      ps.setString(4, country.getCurrency());
+      ps.setInt(5, country.getId());
       ps.executeUpdate();
     } catch (Exception e) {
       System.err.println("SQL Exeption (request or table failed):" + e);e.printStackTrace();

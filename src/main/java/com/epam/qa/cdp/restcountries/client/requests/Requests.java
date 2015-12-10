@@ -54,9 +54,6 @@ public class Requests {
         throw new RuntimeException("Failed : HTTP error code : "
                                    + response.getStatus());
       }
-      System.out.println("Output from Server .... \n");
-      String output = response.getEntity(String.class);
-      System.out.println(output);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -68,16 +65,12 @@ public class Requests {
     try {
       Client client = Client.create();
       WebResource webResource = client.resource(servicePath);
-     // String input = "{\"id\":101,\"name\":\"Austsdfria\",\"capital\":\"unknown\",\"population\":110,\"currency\":\"Euro\"}";
       ClientResponse response = webResource.type("application/json").put(ClientResponse.class, jsonString);
       status = response.getStatus();
       if (status != 200) {
         throw new RuntimeException("Failed : HTTP error code : "
                                    + response.getStatus());
       }
-      System.out.println("Output from Server .... \n");
-      String output = response.getEntity(String.class);
-      System.out.println(output);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -94,9 +87,6 @@ public class Requests {
       if (status != 200) {
         throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
       }
-      String output = response.getEntity(String.class);
-      System.out.println("Output from Server .... \n");
-      System.out.println(output);
     } catch (Exception e) {
       e.printStackTrace();
     }

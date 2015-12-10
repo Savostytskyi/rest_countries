@@ -51,7 +51,7 @@ public class RestCountriesTests {
     Assert.assertTrue(countryDb.equals(countryRest), "ERROR: Incorrect response from REST service!");
   }
 
-  @Test//(dependsOnMethods = "checkPostCountryRequest")
+  @Test(dependsOnMethods = "checkPostCountryRequest")
   public void checkPutCountryRequest() throws IOException {
     Integer restResponseCode = Requests.sendClientPutRequest(Constants.PUT_JSON_STRING);
     assertEquals((int)restResponseCode, 200, "ERROR: response code is: " + restResponseCode);

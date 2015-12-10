@@ -1,6 +1,5 @@
 package com.epam.qa.cdp.restcountries.api.database.connection;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,6 +22,4 @@ public class ConnectorDB {
     String pass=resource.getString("db.password");
     return DriverManager.getConnection(url,user,pass);
   }
-
-
 }
