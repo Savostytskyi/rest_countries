@@ -2,8 +2,6 @@ package com.epam.qa.cdp.restcountries.api.database.dao;
 
 import com.epam.qa.cdp.restcountries.api.database.connection.ConnectorDB;
 import com.epam.qa.cdp.restcountries.api.model.Country;
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +15,9 @@ import java.util.List;
  */
 public class CountriesDao extends AbstractDao<Integer, Country> {
 
+  private Connection cn = null;
+  private Statement st = null;
+  private PreparedStatement ps = null;
   public static final String SQL_SELECT_ALL_COUNTRIES = "SELECT * FROM countries_info";
   public static final String SQL_SELECT_COUNTRY_BY_ID = "SELECT * FROM countries_info WHERE id = ?";
   public static final String SQL_INSERT_COUNTRY = "INSERT INTO `countries_info` (`id`, `name`, `capital`, `population`, `currency`) VALUES (?, ?, ?, ?, ?)";
@@ -26,8 +27,6 @@ public class CountriesDao extends AbstractDao<Integer, Country> {
   @Override
   public List<Country> findAll() {
     List<Country> countries = new ArrayList<Country>();
-    Connection cn = null;
-    Statement st = null;
     try {
       cn = ConnectorDB.getConnection();
       st = cn.createStatement();
@@ -43,14 +42,14 @@ public class CountriesDao extends AbstractDao<Integer, Country> {
       }
     } catch (SQLException e) {
       System.err.println("SQL Exeption (request or table failed):" + e);
+    } finally {
+      closeConnection();
     }
     return countries;
   }
 
   @Override
   public Country findEntityById(Integer id) {
-    Connection cn = null;
-    PreparedStatement ps = null;
     Country country = null;
     try {
       cn = ConnectorDB.getConnection();
@@ -67,22 +66,15 @@ public class CountriesDao extends AbstractDao<Integer, Country> {
         country.setCurrency(rs.getString(5));
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      System.err.println("SQL Exeption (request or table failed):" + e);
     } finally {
-      try {
-        ps.close();
-        cn.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      closeConnection();
     }
     return country;
   }
 
   @Override
-  public boolean delete(Integer id) {
-    Connection cn = null;
-    PreparedStatement ps = null;
+  public void delete(Integer id) {
     try {
       cn = ConnectorDB.getConnection();
       String query = SQL_DELETE_COUNTRY;
@@ -90,32 +82,14 @@ public class CountriesDao extends AbstractDao<Integer, Country> {
       ps.setInt(1, id);
       ps.executeUpdate();
     } catch (Exception e) {
-      e.printStackTrace();
+      System.err.println("SQL Exeption (request or table failed):" + e);
     } finally {
-      try {
-        ps.close();
-        cn.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      closeConnection();
     }
-    return true;
-  }
-
-  @Override
-  public boolean delete(Country entity) {
-    return false;
-  }
-
-  @Override
-  public boolean create(Country entity) {
-    return false;
   }
 
   @Override
   public Country insert(Country country) {
-    Connection cn = null;
-    PreparedStatement ps = null;
     try {
       cn = ConnectorDB.getConnection();
       String query = SQL_INSERT_COUNTRY;
@@ -127,23 +101,15 @@ public class CountriesDao extends AbstractDao<Integer, Country> {
       ps.setString(5, country.getCurrency());
       ps.executeUpdate();
     } catch (Exception e) {
-      e.printStackTrace();
+      System.err.println("SQL Exeption (request or table failed):" + e);
     } finally {
-      try {
-        ps.close();
-        cn.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      closeConnection();
     }
     return country;
   }
 
-
   @Override
   public Country update(Country country) {
-    Connection cn = null;
-    PreparedStatement ps = null;
     try {
       cn = ConnectorDB.getConnection();
       String query = SQL_UPDATE_COUNTRY;
@@ -156,15 +122,20 @@ public class CountriesDao extends AbstractDao<Integer, Country> {
       ps.setString(6, country.getName());
       ps.executeUpdate();
     } catch (Exception e) {
-      e.printStackTrace();
+      System.err.println("SQL Exeption (request or table failed):" + e);e.printStackTrace();
     } finally {
-      try {
-        ps.close();
-        cn.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      closeConnection();
     }
     return country;
+  }
+
+  private void closeConnection() {
+    try {
+      if (cn != null) cn.close();
+      if (st != null) st.close();
+      if (ps != null) ps.close();
+    } catch (SQLException e) {
+      System.err.println("Can't close connection:" + e);
+    }
   }
 }

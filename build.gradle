@@ -16,4 +16,14 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core:2.5.0'
     compile 'mysql:mysql-connector-java:5.1.6'
     compile 'com.sun.jersey:jersey-client:1.19'
+    compile 'org.testng:testng:6.9.9'
+}
+
+task deploylocal(dependsOn: build) << {
+    println "Copy from build/libs into C:/xampp/tomcat/webapps"
+    copy{
+        from "build/libs"
+        into "C:/xampp/tomcat/webapps"
+        include '*.war'
+    }
 }

@@ -1,5 +1,6 @@
 package com.epam.qa.cdp.restcountries.client;
 
+import com.epam.qa.cdp.restcountries.client.commons.Constants;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -12,16 +13,9 @@ import static com.epam.qa.cdp.restcountries.client.commons.Constants.servicePath
 public class RequestClient {
 
   public static void main(String[] args) {
-    sendClientPutRequest();
+    //sendClientPostRequest();
+    sendClientPutRequest(Constants.PUT_JSON_STRING);
 
-    //sendClientGetRequestById(10);
-    //sendClientDeleteRequest(11);
-  /*  System.out.println(new CountriesDao().delete(101));
-    sendClientPostRequest();
-  sendClientGetRequest();*/
-
-    //new CountriesDao().delete(101);
-   // sendClientDeleteRequest();
   }
 
   public static void sendClientGetRequest() {
@@ -56,12 +50,12 @@ public class RequestClient {
     }
   }
 
-  public static void sendClientPostRequest() {
+  public static void sendClientPostRequest(String json) {
     try {
       Client client = Client.create();
       WebResource webResource = client.resource(servicePath);
-      String input = "{\"id\":101,\"name\":\"Austsdfria\",\"capital\":\"Vienna\",\"population\":0,\"currency\":\"Euro\"}";
-      ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
+     // String input = "{\"id\":102,\"name\":\"Austsdfria\",\"capital\":\"Vienna\",\"population\":70,\"currency\":\"Euro\"}";
+      ClientResponse response = webResource.type("application/json").post(ClientResponse.class, json);
       if (response.getStatus() != 201) {
         throw new RuntimeException("Failed : HTTP error code : "
                                    + response.getStatus());
@@ -74,11 +68,11 @@ public class RequestClient {
     }
   }
 
-  public static void sendClientPutRequest() {
+  public static void sendClientPutRequest(String json) {
     try {
       Client client = Client.create();
       WebResource webResource = client.resource(servicePath);
-      String input = "{\"id\":101,\"name\":\"Austsdfria\",\"capital\":\"unknown\",\"population\":110,\"currency\":\"Euro\"}";
+      String input = "{\"id\":104,\"name\":\"Austsdfria\",\"capital\":\"unknown\",\"population\":1100000,\"currency\":\"Euro\"}";
       ClientResponse response = webResource.type("application/json").put(ClientResponse.class, input);
       if (response.getStatus() != 200) {
         throw new RuntimeException("Failed : HTTP error code : "

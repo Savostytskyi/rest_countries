@@ -18,36 +18,68 @@ public class Country extends Entity {
   public Country() {
   }
 
-  public String getName() {
-    return name;
-  }
+  //setters section
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public String getCapital() {
-    return capital;
   }
 
   public void setCapital(String capital) {
     this.capital = capital;
   }
 
-  public Integer getPopulation() {
-    return population;
-  }
-
   public void setPopulation(Integer population) {
     this.population = population;
   }
+
+  public void setCurrency(String currency) {
+    this.currency = currency;
+  }
+
+  //getters section
+
+  public String getName() {
+    return name;
+  }
+
+  public String getCapital() {
+    return capital;
+  }
+
+  public Integer getPopulation() { return population;}
 
   public String getCurrency() {
     return currency;
   }
 
-  public void setCurrency(String currency) {
-    this.currency = currency;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Country)) {
+      return false;
+    }
+    Country country = (Country) o;
+    if (!name.equals(country.name)) {
+      return false;
+    }
+    if (!capital.equals(country.capital)) {
+      return false;
+    }
+    if (!population.equals(country.population)) {
+      return false;
+    }
+    return currency.equals(country.currency);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = name.hashCode();
+    result = 31 * result + capital.hashCode();
+    result = 31 * result + population.hashCode();
+    result = 31 * result + currency.hashCode();
+    return result;
   }
 
   @Override

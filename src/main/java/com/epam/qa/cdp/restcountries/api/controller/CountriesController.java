@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-
+import javax.ws.rs.core.Response;
 
 @RestController
 @RequestMapping("v1/cdp")
 public class CountriesController {
+
     @Autowired
     private CountryService countryService;
 
@@ -31,20 +32,21 @@ public class CountriesController {
 
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewCountry(@RequestBody Country country) {
+    public Response createNewCountry(@RequestBody Country country) {
         countryService.addCountry(country);
+        return Response.ok(country).build();
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
-   // @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
-    public void updateCountry(@RequestBody Country country) {
+    public Response updateCountry(@RequestBody Country country) {
         countryService.updateCountry(country);
+        return Response.ok(country).build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCurrency(@PathVariable Integer id) {
+    public Response deleteCurrency(@PathVariable Integer id) {
         countryService.removeCountry(id);
+        return Response.ok(id).build();
     }
 
 }

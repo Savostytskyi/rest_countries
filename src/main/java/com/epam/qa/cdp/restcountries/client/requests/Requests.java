@@ -11,7 +11,8 @@ import static com.epam.qa.cdp.restcountries.client.commons.Constants.servicePath
  */
 public class Requests {
 
-  public static void sendClientGetRequest() {
+  public static String sendClientGetRequest() {
+    String output = null;
     try {
       Client client = Client.create();
       WebResource webResource = client.resource(servicePath);
@@ -19,15 +20,15 @@ public class Requests {
       if (response.getStatus() != 200) {
         throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
       }
-      String output = response.getEntity(String.class);
-      System.out.println("Output from Server .... \n");
-      System.out.println(output);
+      output = response.getEntity(String.class);
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return output;
   }
 
-  public static void sendClientGetRequestById(Integer id) {
+  public static String sendClientGetRequestById(Integer id) {
+    String output = null;
     try {
       Client client = Client.create();
       WebResource webResource = client.resource(servicePath).path(Integer.toString(id));
@@ -35,21 +36,21 @@ public class Requests {
       if (response.getStatus() != 200) {
         throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
       }
-      String output = response.getEntity(String.class);
-      System.out.println("Output from Server .... \n");
-      System.out.println(output);
+      output = response.getEntity(String.class);
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return output;
   }
 
-  public static void sendClientPostRequest() {
+  public static Integer sendClientPostRequest(String jsonString) {
+    Integer status = null;
     try {
       Client client = Client.create();
       WebResource webResource = client.resource(servicePath);
-      String input = "{\"id\":101,\"name\":\"Austsdfria\",\"capital\":\"Vienna\",\"population\":0,\"currency\":\"Euro\"}";
-      ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
-      if (response.getStatus() != 201) {
+      ClientResponse response = webResource.type("application/json").post(ClientResponse.class, jsonString);
+      status = response.getStatus();
+      if (status != 201) {
         throw new RuntimeException("Failed : HTTP error code : "
                                    + response.getStatus());
       }
@@ -59,15 +60,18 @@ public class Requests {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return status;
   }
 
-  public static void sendClientPutRequest() {
+  public static Integer sendClientPutRequest(String jsonString) {
+    Integer status = null;
     try {
       Client client = Client.create();
       WebResource webResource = client.resource(servicePath);
-      String input = "{\"id\":101,\"name\":\"Austsdfria\",\"capital\":\"unknown\",\"population\":110,\"currency\":\"Euro\"}";
-      ClientResponse response = webResource.type("application/json").put(ClientResponse.class, input);
-      if (response.getStatus() != 200) {
+     // String input = "{\"id\":101,\"name\":\"Austsdfria\",\"capital\":\"unknown\",\"population\":110,\"currency\":\"Euro\"}";
+      ClientResponse response = webResource.type("application/json").put(ClientResponse.class, jsonString);
+      status = response.getStatus();
+      if (status != 200) {
         throw new RuntimeException("Failed : HTTP error code : "
                                    + response.getStatus());
       }
@@ -77,14 +81,17 @@ public class Requests {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return status;
   }
 
-  public static void sendClientDeleteRequest(Integer id) {
+  public static Integer sendClientDeleteRequest(Integer id) {
+    Integer status = null;
     try {
       Client client = Client.create();
       WebResource webResource = client.resource(servicePath).path(Integer.toString(id));
       ClientResponse response = webResource.type(MediaType.TEXT_PLAIN).delete(ClientResponse.class);
-      if (response.getStatus() != 200) {
+      status = response.getStatus();
+      if (status != 200) {
         throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
       }
       String output = response.getEntity(String.class);
@@ -93,6 +100,6 @@ public class Requests {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return status;
   }
-
 }

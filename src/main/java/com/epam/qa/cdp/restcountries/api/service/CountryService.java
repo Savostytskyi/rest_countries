@@ -12,7 +12,6 @@ public class CountryService {
 
     private List<Country> countries;
     private CountriesDao countriesDao;
-    private Country country;
 
     @PostConstruct
     public void init() {
@@ -26,12 +25,11 @@ public class CountryService {
     }
 
     public Country getCountry(Integer id) {
-        country = countriesDao.findEntityById(id);
-        return country;
+        return countriesDao.findEntityById(id);
     }
 
     public void addCountry(Country country) {
-            countriesDao.insert(country);
+        countriesDao.insert(country);
     }
 
     public void removeCountry(Integer id) {
