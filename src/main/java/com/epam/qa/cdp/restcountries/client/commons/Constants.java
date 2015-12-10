@@ -5,6 +5,6 @@ package com.epam.qa.cdp.restcountries.client.commons;
  */
 public class Constants {
 
-  public static final String servicePath = "http://localhost:8080/CountriesService/rest/v1/countries/";
+  public static final String servicePath = "http://localhost:8080/countries/rest/v1/cdp/";
 
 }

@@ -2,12 +2,8 @@ package com.epam.qa.cdp.restcountries.api.service;
 
 import com.epam.qa.cdp.restcountries.api.database.dao.CountriesDao;
 import com.epam.qa.cdp.restcountries.api.model.Country;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +12,7 @@ public class CountryService {
 
     private List<Country> countries;
     private CountriesDao countriesDao;
+    private Country country;
 
     @PostConstruct
     public void init() {
@@ -29,8 +26,8 @@ public class CountryService {
     }
 
     public Country getCountry(Integer id) {
-        countries = countriesDao.findAll();
-        return countries.get(id);
+        country = countriesDao.findEntityById(id);
+        return country;
     }
 
     public void addCountry(Country country) {
@@ -39,5 +36,9 @@ public class CountryService {
 
     public void removeCountry(Integer id) {
         countriesDao.delete(id);
+    }
+
+    public void updateCountry(Country country) {
+        countriesDao.update(country);
     }
 }

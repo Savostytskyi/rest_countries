@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("v1/countries")
+@RequestMapping("v1/cdp")
 public class CountriesController {
     @Autowired
     private CountryService countryService;
@@ -31,13 +31,20 @@ public class CountriesController {
 
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = {"application/json"}, produces = {"application/json"})
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewCurrency(@RequestBody Country country) {
+    public void createNewCountry(@RequestBody Country country) {
         countryService.addCountry(country);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = {"application/json"})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCurrency(@PathVariable("id") Integer id) {
+    @RequestMapping(value = "", method = RequestMethod.PUT, consumes = {"application/json"}, produces = {"application/json"})
+   // @ResponseStatus(HttpStatus.UPGRADE_REQUIRED)
+    public void updateCountry(@RequestBody Country country) {
+        countryService.updateCountry(country);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCurrency(@PathVariable Integer id) {
         countryService.removeCountry(id);
     }
+
 }
