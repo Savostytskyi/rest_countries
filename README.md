@@ -5,8 +5,8 @@
 2. Run MySQL server and import database from ../db/countries.sql.
 3. Install Gradle if needed.
 3. Open cmd, navigate to root project folder.
-4. Type: <code>gradle deploylocal -Ptomhome="$path_to_tomcat"</code> (e.g. "C:/xampp/tomcat").
+4. Type: <code><b>gradle deploylocal -Ptomhome="$path_to_tomcat"<b></code> (e.g. "C:/xampp/tomcat").
 5. Wait for deploy on tomcat finished. 
-6. For test REST service type: <code>gradle unittest</code>
+6. For test REST service type: <code><b>gradle unittest</b></code>
 
 <b>SUCCESS!</b>
