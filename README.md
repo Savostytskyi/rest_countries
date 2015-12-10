@@ -9,4 +9,4 @@
 5. Wait for deploy on tomcat finished. 
 6. For test REST service type: <code>gradle unittest</code>
 
-<marquee>SUCCESS</marquee>
+<b>SUCCESS!</b>
